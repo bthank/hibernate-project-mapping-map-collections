@@ -22,7 +22,7 @@
         <property name="show_sql">true</property>
         
         <!-- Auto create tables;  create will drop and then create tables when we run the application -->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         
         
 		<!-- Set the current session context -->

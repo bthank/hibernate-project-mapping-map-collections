@@ -1,7 +1,8 @@
 package com.binu.hibernate.demo.entity;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -36,7 +38,8 @@ public class Student {
 	@CollectionTable(name="image")
 	@MapKeyColumn(name="file_name")  // this is the key column for the collection
 	@Column(name="image_name")       // this is the value column for the collection
-	private Map<String, String> images = new HashMap<String, String>();
+	@OrderBy                // defaults to order by map key column (file_name) ascending
+	private SortedMap<String, String> images = new TreeMap<String, String>();
 	
 	
 
@@ -84,11 +87,11 @@ public class Student {
 		this.email = email;
 	}
 
-	public Map<String, String> getImages() {
+	public SortedMap<String, String> getImages() {
 		return images;
 	}
 
-	public void setImages(Map<String, String> images) {
+	public void setImages(SortedMap<String, String> images) {
 		this.images = images;
 	}
 
