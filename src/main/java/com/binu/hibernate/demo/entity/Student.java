@@ -1,6 +1,6 @@
 package com.binu.hibernate.demo.entity;
 
-import java.util.Map;
+import java.util.Comparator;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -12,8 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.SortComparator;
 
 @Entity
 @Table(name="student")
@@ -38,9 +39,22 @@ public class Student {
 	@CollectionTable(name="image")
 	@MapKeyColumn(name="file_name")  // this is the key column for the collection
 	@Column(name="image_name")       // this is the value column for the collection
-	@OrderBy                // defaults to order by map key column (file_name) ascending
+//	@OrderBy                // defaults to order by map key column (file_name) ascending
+	@SortComparator(ReverseStringComparator.class)
 	private SortedMap<String, String> images = new TreeMap<String, String>();
 	
+	
+	// Add a custom class to perform a custom sort -- use case is for adding your own custom complex business logic for sorting
+	// Use this class as another way to generate a descending sort on a string
+	public static class ReverseStringComparator implements Comparator<String> {
+
+		@Override
+		public int compare(String o1, String o2) {
+			 
+			return o2.compareTo(o1);
+		}
+		
+	}
 	
 
 	public Student() {
